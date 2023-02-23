@@ -1,35 +1,35 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv/config'); //Secret 
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const port = process.env.PORT || 3000;
+const api = require('./src/routes/index');
+
+dotenv.config();
 
 const app = express();
 
-/* 
-    We use bodyParser to convert data that comes in with
-    POST requests into JSON objects. 
-*/
-app.use(express.json());
+// enables cross origin resource sharing
+app.use(cors());
 
-//Import Routes 
-// const postsRoute = require('./routes/posts');
+// parses objects in response into json 
+app.use(bodyParser.json());
 
+// main api router
+app.use('/api', api);
 
-//All routes that start with posts/.. will be ran by postsRoute
-// app.use('/posts', postsRoute);
-
-//Routes
-app.get('/', (req, res) => {
-    res.send('Welcome to the home page');
-})
-
-
-//Connect to DB 
+// Connect to DB
 mongoose.connect(
-    process.env.DB_CONN_STRING, 
-    {useNewUrlParser:true}, 
-    () => {console.log('Succesfully connected to DB')
-});
+  process.env.DB_CONN_STRING,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log('Connection to DB: success!');
+  },
+);
 
-//The app will be hosted on localhost, port 3000.
-console.log('App is running on: http://localhost:3000');
-app.listen(3000);
+// Listening
+app.listen(port, () => {
+  console.log('Server started successfully!');
+});
