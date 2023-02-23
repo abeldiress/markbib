@@ -8,7 +8,7 @@ module.exports.auth = async (req, res, next) => {
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const teacher = await Teacher.findOne({ _id: verified });
-    if (!teacher) {
+    if (teacher) {
       req.teacher = verified;
     } else {
       res

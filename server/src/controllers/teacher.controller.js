@@ -24,10 +24,22 @@ const deleteTeacher = async (req, res) => {
 };
 
 const updateTeacher = async (req, res) => {
-  const teacher = await Teacher.findOneAndUpdate({ _id: req.teacher }, req.query);
+  const teacher = await Teacher.findOne({ _id: req.teacher });
   if (!teacher) return res.status(400).json({ error: 'Teacher not found.' });
 
-  res.json(teacher);
+  for(const property in req.body) {
+    if (property == 'password') {
+      const salt = await bcrypt.genSalt(10);
+      const hashPwd = await bcrypt.hash(req.body.password, salt);
+      teacher.password = hashPwd;
+    } else {
+      teacher[property] = req.body[property];
+    }   
+  }
+
+  console.log(teacher);
+  const updatedTeacher = await teacher.save();
+  res.json(updatedTeacher);
 };
 
 const registerTeacher = async (req, res) => {
@@ -67,11 +79,11 @@ const loginTeacher = async (req, res) => {
 
   // check if document already exists
   const teacher = await Teacher.findOne({ email: req.body.email });
-  if (!teacher) return res.json({ error: 'Account doesnt\'t exists' });
+  if (!teacher) return res.json({ error: 'Account doesn\'t exist.' });
 
   // check if password is correct
   const validPass = await bcrypt.compare(req.body.password, teacher.password);
-  if (!validPass) return res.json({ success: 'Invalid password' });
+  if (!validPass) return res.json({ error: 'Invalid password' });
 
   // Create and assign jwt
   const token = jwt.sign({ _id: teacher._id }, process.env.TOKEN_SECRET);
