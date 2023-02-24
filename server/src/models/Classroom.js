@@ -10,9 +10,9 @@ const Classroom = mongoose.Schema({
         required: true,
     },
     // really necessary? tbd
-    // school_year: {
-    //     type: Number
-    // },
+    school_year: {
+        type: Number
+    },
     assignments: [String],
     students: [String],
     expectations: [String]
