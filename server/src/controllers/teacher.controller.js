@@ -18,7 +18,7 @@ const getTeacher = async (req, res) => {
 
 const deleteTeacher = async (req, res) => {
   const teacher = await Teacher.deleteOne({ _id: req.teacher });
-  if (!user) return res.status(400).json({ error: 'Teacher not found.' });
+  if (!teacher) return res.status(400).json({ error: 'Teacher not found.' });
 
   res.json({ success: 'Account successfully deleted :(' });
 };
@@ -37,7 +37,6 @@ const updateTeacher = async (req, res) => {
     }   
   }
 
-  console.log(teacher);
   const updatedTeacher = await teacher.save();
   res.json(updatedTeacher);
 };
