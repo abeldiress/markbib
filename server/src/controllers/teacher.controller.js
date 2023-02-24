@@ -66,7 +66,7 @@ const registerTeacher = async (req, res) => {
 
   try {
     const savedTeacher = await teacher.save();
-    res.json({ savedTeacher: savedTeacher._id });
+    res.json({ saved_teacher: savedTeacher._id });
   } catch (err) {
     res.send(err);
   }
