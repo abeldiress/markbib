@@ -13,9 +13,12 @@ const Teacher = mongoose.Schema({
         type: String,
         required: true,
     },
-    pfp: {
+    email: {
         type: String,
         required: true,
+    },
+    profile_picture: {
+        type: String,
     },
     school: {
         type: String,
