@@ -25,7 +25,7 @@ const createClassroom = async (req, res) => {
 
 const getClassroom = async (req, res) => {
   const teacher = await Teacher.findOne({ _id: req.teacher });
-  if(teacher.classes.includes(req.body.classroom_id)) return res.status(400).json({ error: 'Classroom not found.' });
+  if(!teacher.classes.includes(req.body.classroom_id)) return res.status(400).json({ error: 'Classroom not found.' }); // shouldn't there be a not infront of this one
 
   const classroom = await Classroom.findOne({ _id: req.body.classroom_id });
   return res.json(classroom);
