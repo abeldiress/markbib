@@ -1,4 +1,4 @@
-const SmallButton = () => {
+const SmallButton = ({label}) => {
     // const [isPending, setIsPending] = useState(false);
     // handleSubmit in atoms?
     return ( 
