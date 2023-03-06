@@ -1,4 +1,4 @@
-const largeButton = () => {
+const LargeButton = ({label}) => {
     // const [isPending, setIsPending] = useState(false);
     // handleSubmit in atoms?
     return ( 
@@ -8,4 +8,4 @@ const largeButton = () => {
 
     );
 }
-export default largeButton;
+export default LargeButton;

@@ -1,4 +1,4 @@
-const smallButton = () => {
+const SmallButton = () => {
     // const [isPending, setIsPending] = useState(false);
     // handleSubmit in atoms?
     return ( 
@@ -9,4 +9,4 @@ const smallButton = () => {
 
     );
 }
-export default smallButton;
+export default SmallButton;
