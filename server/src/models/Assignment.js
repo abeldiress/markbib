@@ -1,19 +1,25 @@
 const mongoose = require('mongoose');
 
+
+
 const Assignment = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
+
     markband: [{
         lower_bound: Number,
         upper_bound: Number
     }],
-    expectations: [String],
+    
     scores: [{
         student: mongoose.Schema.Types.ObjectId,
-        expectation: String,
-        score: String,
+        expectations: [{
+            expectation: String,
+            score: Number
+        }],
+        total_score: String,
         markbanded_score: String
     }],
     classroom: {
