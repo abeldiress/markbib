@@ -1,5 +1,6 @@
 import TextInput from '../atoms/TextInput';
 import LargeButton from '../atoms/LargeButton';
+import RefLink from '../atoms/RefLink';
 
 const Login = () => {
     return ( 
@@ -12,6 +13,8 @@ const Login = () => {
                 { <TextInput placeholder="Password"/> }
                 {<LargeButton label="Login"/>}
             </form>
+            <RefLink path="/recovery" text="Forgot Password?"/>
+            <RefLink path="/signup" text="Don't have an account? Sign up"/>
         </div>
     );
 }
