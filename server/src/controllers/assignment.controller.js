@@ -21,7 +21,7 @@ const createAssignment = async (req, res) => {
 const getAssignment = async (req, res) => {
     // init teacher stuff
     const teacher = await Teacher.findone({_id : req.teacher}) 
-    const assignment = await Assignment.findOne({ _id: req.params.assignment_id });
+    const assignment = await Assignment.findOne({ _id: req.body.assignment_id });
     // teacher verification
     if(!teacher.classes.includes(assignment.classroom)) return res.status(400).json({ error: 'Hey! This assignment doesn\'t belong to you.'},);
     if (!assignment) return res.status(400).json({ error: 'Assignment not found.' });
@@ -30,12 +30,12 @@ const getAssignment = async (req, res) => {
 
 const deleteAssignment = async (req, res) => {
     const teacher = await Teacher.findone({_id : req.teacher}) 
-    const assignment = await Assignment.findOne({ _id: req.params.assignment_id });
+    const assignment = await Assignment.findOne({ _id: req.body.assignment_id });
     // teacher verification
     if(!teacher.classes.includes(assignment.classroom)) return res.status(400).json({ error: 'Hey! This assignment doesn\'t belong to you.'},);
     if (!assignment) return res.status(400).json({ error: 'Assignment not found.' });
     try {
-        const deletedAssignment = await Assignment.deleteOne({ _id: req.params.assignment_id });
+        const deletedAssignment = await Assignment.deleteOne({ _id: req.body.assignment_id });
         return res.json(deletedAssignment);
     }
     catch (err) {
@@ -44,7 +44,7 @@ const deleteAssignment = async (req, res) => {
 }
 
 const addExpectation = async (req, res) => {
-    const assignment = await Assignment.findOne({ _id: req.params.assignment_id });
+    const assignment = await Assignment.findOne({ _id: req.body.assignment_id });
     if (!assignment) return res.status(400).json({ error: 'Assignment not found.' });
     assignment.expectations.push(req.body.expectation);
     try {
@@ -57,7 +57,7 @@ const addExpectation = async (req, res) => {
 }
 
 const updateMarkband = async (req, res) => {
-    const assignment = await Assignment.findOne({ _id: req.params.assignment_id });
+    const assignment = await Assignment.findOne({ _id: req.body.assignment_id });
     if (!assignment) return res.status(400).json({ error: 'Assignment not found.' });
     assignment.markband = req.body.markband; // can't use the .push because that doesn't make sense right
     try {
@@ -72,8 +72,8 @@ const updateMarkband = async (req, res) => {
 const updateScore = async (req, res) => {
     // add score / update score are arbitrary now: will have default for 0 so everything basically uses update score
     // the student is now needed for each score
-    const student = await Student.findOne({ _id: req.params.student_id }); 
-    const expectation = await Expectation.findOne({ _id: req.params.expectation_id });
+    const student = await Student.findOne({ _id: req.body.student_id }); 
+    const expectation = await Expectation.findOne({ _id: req.body.expectation_id });
     // we get assigment in terms of the student 
     const assignment = await Assignment.findOne({ 'scores.student': studentId, 'scores.expectations.expectation': expectation })
     // find the score 
@@ -101,8 +101,8 @@ const updateScore = async (req, res) => {
 // this function will serve to basically delete that expectation entirely => only real way to 'delete' a score\
 // this is because we can't have a score without an expectation
 const deleteScore = async (req, res) => {
-    const student = await Student.findOne({ _id: req.params.student_id });
-    const expectation = await Expectation.findOne({ _id: req.params.expectation_id });
+    const student = await Student.findOne({ _id: req.body.student_id });
+    const expectation = await Expectation.findOne({ _id: req.body.expectation_id });
     const assignment = await Assignment.findOne({ 'scores.student': studentId, 'scores.expectations.expectation': expectation })
     const current_score = await assignment.scores.find(score => score.student.toString() === studentId && score.expectations.expectation === expectation);
     if (!current_score) return res.status(400).json({ error: 'current score not found' });
@@ -123,12 +123,11 @@ const deleteScore = async (req, res) => {
 const updateAssignment = async (req, res) => {
     const teacher = await Teacher.findone({_id : req.teacher}) 
     if(!teacher.classes.includes(assignment.classroom)) return res.status(400).json({ error: 'Hey! This assignment doesn\'t belong to you.'},);
-    const assignment = await Assignment.findOne({ _id: req.params.assignment_id });
+    const assignment = await Assignment.findOne({ _id: req.body.assignment_id });
     if (!assignment) return res.status(400).json({ error: 'Assignment not found.' });
-    assignment.classroom = req.body.classroom;
-    assignment.name = req.body.name;
-    assignment.markband = req.body.markband;
-    assignment.expectations = req.body.expectations;
+    for(const property in req.body){
+        assignment[property] = req.body[property];
+    }
     try {
         const savedAssignment = await assignment.save();
         return res.json(savedAssignment);
