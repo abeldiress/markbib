@@ -18,10 +18,10 @@ const createExpectation = async (req, res) => {
 
 
 const deleteExpectation = async(req, res) => {
-    const expectation = await Expectation.findOne({ _id: req.params.expectation_id });
+    const expectation = await Expectation.findOne({ _id: req.body.expectation_id });
     if (!expectation) return res.status(400).json({ error: 'Expectation not found.' });
     try {
-        const deletedExpectation = await Expectation.deleteOne({ _id: req.params.expectation_id });
+        const deletedExpectation = await Expectation.deleteOne({ _id: req.body.expectation_id });
         return res.json(deletedExpectation);
     }
     catch (err) {
@@ -30,12 +30,11 @@ const deleteExpectation = async(req, res) => {
 }
 
 const updateExpectation = async (req, res) => {
-    const expectation = await Expectation.findOne({ _id: req.params.expectation_id });
+    const expectation = await Expectation.findOne({ _id: req.body.expectation_id });
     if (!expectation) return res.status(400).json({ error: 'Expectation not found.' });
-    expectation.name = req.body.name;
-    expectation.description = req.body.description;
-    expectation.classroom = req.body.classroom;
-    expectation.assignments = req.body.assignments;
+    for(const property in req.body){
+        expectation[property] = req.body[property];
+    }
     try {
         const savedExpectation = await expectation.save();
         return res.json(savedExpectation);
