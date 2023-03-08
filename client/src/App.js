@@ -1,4 +1,4 @@
-import TopNavbar from './molecules/topNavbar';
+import TopNavbar from './molecules/TopNavbar';
 // import SideNavbar from './molecules/sideNavbar';
 import Recovery from './pages/Recovery';
 import Login from './pages/Login';
@@ -13,7 +13,7 @@ function App() {
         <TopNavbar/>
         <div className="content">
           <Routes>
-            <Route exact path="/" element={<Home/>}>
+              <Route path="/" element={<Home/>}>
               </Route>
               <Route path="/login" element={<Login/>}>
               </Route>
