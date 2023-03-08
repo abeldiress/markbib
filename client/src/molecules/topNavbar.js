@@ -1,12 +1,12 @@
-import {Link} from 'react-router-dom';
+import RefLink from '../atoms/RefLink'
 
 const TopNavbar = () => {
     return (
     <nav className="topNavbar">
         <div className="links">
-            <Link to="/"> Home </Link>
-            <Link to="/signup"> Create Account </Link>
-            <Link to="/login"> Login </Link>
+            <RefLink path="/" text="Home"/>
+            <RefLink path="/signup" text="Create Account"/>
+            <RefLink path="/login" text="Login"/>
         </div>  
     </nav>
     );
