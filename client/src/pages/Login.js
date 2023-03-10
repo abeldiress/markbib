@@ -1,16 +1,23 @@
 import TextInput from '../atoms/TextInput';
 import LargeButton from '../atoms/LargeButton';
 import RefLink from '../atoms/RefLink';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
+
+  const {register, handleSubmit} = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data)
+  }
   return ( 
     <div className="login">
       <h2> Login into MarkBib </h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label> Please enter your email address </label>
-            { <TextInput placeholder="Email Address"/> }
+            { <TextInput ref={register({required: true})} />}
             <label> Please enter your password </label>
-            { <TextInput placeholder="Password"/> }
+            { <TextInput ref={register({required: true})} />}
             {<LargeButton label="Login"/>}
         </form>
         <RefLink path="/recovery" text="Forgot Password?"/>

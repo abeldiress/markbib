@@ -4,6 +4,7 @@ import Recovery from './pages/Recovery';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Home from "./pages/Home";
+import Dashboard from './pages/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
               </Route>
               <Route path="/recovery" element={<Recovery/>}>              
               </Route>
+              {/* <Route path="/dashboard" element={<Dashboard/>}>
+              </Route> */}
           </Routes>
         </div>  
       </div>

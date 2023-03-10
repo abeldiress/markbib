@@ -1,10 +1,9 @@
-const TextInput = ({placeholder}) => {
+const TextInput = ({ref}) => {
   return ( 
     <div className="text-input">
       <input
         type="text"
-        required
-        placeholder={placeholder}
+        ref={ref}
       />
     </div>
   );

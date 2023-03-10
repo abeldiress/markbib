@@ -7,6 +7,7 @@ const TopNavbar = () => {
         <RefLink path="/" text="Home"/>
         <RefLink path="/signup" text="Create Account"/>
         <RefLink path="/login" text="Login"/>
+        <RefLink path="/dashboard" text="Dashboard"/>
       </div>  
   </nav>
   );
