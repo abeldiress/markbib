@@ -1,15 +1,13 @@
 const Student = require("../models/Student")
+const { createValidation } = require("../utils/validation/student.validation")
+const { updateValidation } = require("../utils/validation/student.validation")
+
 
 const createStudent = async (req, res) => {
+    const {error} = createValidation(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
 
-    const student = new Student({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        s_number: req.body.s_number,
-        grade: req.body.grade,  
-        email: req.body.email
-    });
-
+    const student = new Student(req.body);
     try {
         const savedStudent = await student.save();
         return res.json(savedStudent);
@@ -36,12 +34,15 @@ const deleteStudent = async (req, res) => {
 }
 
 const updateStudent = async (req, res) => {
+    const {error} = updateValidation(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
     const student = await Student.findOne({ _id: req.body.student_id });
     if (!student) return res.status(400).json({ error: 'Student not found.' });
     
     for(const property in req.body){
         if (property == '_id') {
-            return res.status(400).json({ error: 'Can not change id of student!' });
+            return res.status(400).json({ error: 'Cannot change id of student!' });
         }
         student[property] = req.body[property];
     }
