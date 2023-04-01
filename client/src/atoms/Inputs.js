@@ -1,8 +1,12 @@
 import React from "react";
 
-const Input = ( { register, id, placeholder, name, ...rest} ) => {
+const Input = ( { label, register, name, ...rest} ) => {
   return (
-    <input id={id} placeholder={placeholder} {...register(name, {required:true})}  {...rest} />
+  <>
+    <label> {label} </label>
+    <input {...register(name, {required:true})}  {...rest} />
+  </>
+
   );
 }
  

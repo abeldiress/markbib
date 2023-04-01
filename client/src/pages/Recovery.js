@@ -1,15 +1,17 @@
-import TextInput from '../atoms/TextInput';
-import LargeButton from '../atoms/LargeButton';
+import Input from '../atoms/Inputs';
+import Form from '../atoms/Form';
+import { useForm } from "react-hook-form";
 
 const Recovery = () => {
+  const { register } = useForm();
+  const onSubmit = data => console.log(data);
   return (  
     <div className="recovery">
       <h2> Reset Password </h2>
-        <form>
-          <label> Please enter the email address of your account </label>
-          <TextInput placeholder="Email address"/>
-          <LargeButton label="Confirm"/>
-        </form>
+        <Form onSubmit={onSubmit}>
+          <Input label="Please enter your email address"  register={register} placeholder="Email address" name="email"/>
+          <Input register={register} name="button" type="submit" value="Confirm" />
+        </Form>
     </div>
   );
 }
