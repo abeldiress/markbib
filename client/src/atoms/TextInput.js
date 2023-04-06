@@ -1,11 +1,8 @@
-const TextInput = ({ref}) => {
-  return ( 
-    <div className="text-input">
-      <input
-        type="text"
-        ref={ref}
-      />
-    </div>
+import React from "react";
+
+const TextInput = ({ register, placeholder, name, ...rest}) => {
+  return (
+    <input placeholder={placeholder} {...register(name, {required:true})}  {...rest} />
   );
 }
  

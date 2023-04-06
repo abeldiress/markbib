@@ -1,4 +1,3 @@
-import LargeButton from '../atoms/LargeButton';
 import TextInput from '../atoms/TextInput';
 import RefLink from '../atoms/RefLink';
 
@@ -15,7 +14,6 @@ const Signup = () => {
           { <TextInput placeholder="Password"/> }
           <label> Please confirm your password </label>
           { <TextInput placeholder="Confirm Password"/> }
-          {<LargeButton label="Create Account" />}
         </form>
         <RefLink path="/login" text="Already have an account? Log in"/>
     </div>
