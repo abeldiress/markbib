@@ -22,8 +22,8 @@ function App() {
               </Route>
               <Route path="/recovery" element={<Recovery/>}>              
               </Route>
-              {/* <Route path="/dashboard" element={<Dashboard/>}>
-              </Route> */}
+              <Route path="/dashboard" element={<Dashboard/>}>
+              </Route>
           </Routes>
         </div>  
       </div>

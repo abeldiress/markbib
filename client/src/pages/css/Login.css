@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .container {
   display: flex;
   justify-content: center;
@@ -10,4 +11,18 @@
   padding: 30px;
   background-color: #e0ecf5;
   border-radius: 25px;
+=======
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 641px;
+  padding: 30px;
+  background-color: #e0ecf5;
+  border-radius: 25px;
+>>>>>>> fc2ba92191306ea156c3009385648fb1ad60ddf4
 }

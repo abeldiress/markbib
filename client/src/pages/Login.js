@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 import TextInput from '../atoms/TextInput';
 import Form from '../molecules/Form';
+=======
+import Input from "../atoms/Inputs";
+import Form from "../atoms/Form";
+import RefLink from "../atoms/RefLink";
+>>>>>>> fc2ba92191306ea156c3009385648fb1ad60ddf4
 import { useForm } from "react-hook-form";
 import './css/Login.css';
 
 const Login = () => {
   const { register } = useForm();
+<<<<<<< HEAD
   const onSubmit = (data) => console.log(data);
   return (
     <Form onSubmit={onSubmit}>
@@ -38,6 +45,22 @@ const Login = () => {
     //     <RefLink path="/signup" text="Don't have an account? Sign up"/>
     //   </div>
     // </div> 
+=======
+  const onSubmit = data => console.log(data);
+
+  return (
+    <div className="login">
+      <Form onSubmit={onSubmit}>
+        <Input label="Please enter your email address" register={register} placeholder="E-mail Address" name="email" />
+        <Input label="Please enter your password" register={register} placeholder="Password" name="password" />
+        <Input name="button" type="submit" value="Login" register={register}/>
+      </Form>
+      <RefLink path="/recovery" text="Forgot password"/>
+      <RefLink path="/signup" text="Create an account"/>
+    </div>
+
+
+>>>>>>> fc2ba92191306ea156c3009385648fb1ad60ddf4
   );
 }
  
