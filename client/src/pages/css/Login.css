@@ -3,6 +3,11 @@
   justify-content: center;
 }
 
+.user-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .login {
   display: flex;
   flex-direction: column;
@@ -10,4 +15,18 @@
   padding: 30px;
   background-color: #e0ecf5;
   border-radius: 25px;
+}
+
+.text-input {
+  border-radius: 10px;
+  height: 20px;
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+  border-style: solid;
+  border-color: #c8c8c8;
+  color: #6c6f7d;
+  background: #f6f6f6;
+  outline: none;
+  border-width: 3px;
+  
 }

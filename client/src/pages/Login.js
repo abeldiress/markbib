@@ -10,9 +10,9 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Form onSubmit={onSubmit}>
-        <Input label="Please enter your email address" register={register} placeholder="E-mail Address" name="email" />
-        <Input label="Please enter your password" register={register} placeholder="Password" name="password" />
+      <Form styleClassName="user-form" onSubmit={onSubmit}>
+        <Input className="text-input" label="Please enter your email address" register={register} placeholder="E-mail Address" name="email" />
+        <Input className="text-input" label="Please enter your password" register={register} placeholder="Password" name="password" />
         <Input name="button" type="submit" value="Login" register={register}/>
       </Form>
       <RefLink path="/recovery" text="Forgot password"/>

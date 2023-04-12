@@ -6,7 +6,6 @@ const Input = ( { label, register, name, ...rest} ) => {
     <label> {label} </label>
     <input {...register(name, {required:true})}  {...rest} />
   </>
-
   );
 }
  
