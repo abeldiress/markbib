@@ -1,4 +1,4 @@
-import Input from '../atoms/Inputs';
+import Input from '../atoms/Input';
 import Form from '../atoms/Form';
 import { useForm } from "react-hook-form";
 

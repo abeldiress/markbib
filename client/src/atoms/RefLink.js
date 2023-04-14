@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
 
-const RefLink = ({path, text}) => {
+const RefLink = ({path, text, ...props}) => {
   return ( 
-    <Link to={path}> {text} </Link>
+    <Link to={path} {...props}> {text} </Link>
   );
 }
  
