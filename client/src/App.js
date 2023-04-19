@@ -1,4 +1,5 @@
 import TopNavbar from './molecules/TopNavbar';
+import Classes from './pages/Classes';
 // import SideNavbar from './molecules/sideNavbar';
 import Recovery from './pages/Recovery';
 import Login from './pages/Login';
@@ -14,16 +15,12 @@ function App() {
         <TopNavbar/>
         <div className="content">
           <Routes>
-              <Route path="/" element={<Home/>}>
-              </Route>
-              <Route path="/login" element={<Login/>}>
-              </Route>
-              <Route path="/signup" element={<Signup/>}>
-              </Route>
-              <Route path="/recovery" element={<Recovery/>}>              
-              </Route>
-              <Route path="/dashboard" element={<Dashboard/>}>
-              </Route>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>}/>
+              <Route path="/recovery" element={<Recovery/>}/>
+              <Route path="/dashboard" element={<Dashboard/>} />
+              <Route path="/class/:class_id" element={<Classes/>}/>
           </Routes>
         </div>  
       </div>
