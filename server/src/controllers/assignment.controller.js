@@ -1,14 +1,15 @@
 const Assignment = require('../models/Assignment');
-const Teacher = require('..models/Teacher')
+const Teacher = require('../models/Teacher');
+const { updateValidation } = require('../utils/validation/assignment.validation');
+const { createValidation } = require('../utils/validation/assignment.validation');
+
 
 const createAssignment = async (req, res) => {
-    const assignment = new Assignment({
-        classroom: req.body.classroom,
-        name: req.body.name,
-        markband: req.body.markband,
-        expectations: req.body.expectations, // can be empty to start with -> teachers will add yk
-        scores: req.body.scores
-    });
+    // validation
+    const { error } = createValidation(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+    
+    const assignment = new Assignment(req.body);
     try {
         const savedAssignment = await assignment.save();
         return res.json(savedAssignment);
@@ -144,7 +145,6 @@ module.exports = {
     deleteAssignment,
     addExpectation,
     updateMarkband,
-    addScore,
     deleteScore,
     updateScore,
     updateAssignment

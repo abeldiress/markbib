@@ -6,6 +6,19 @@ const { createValidation } = require('../utils/validation/classroom.validation')
 // that adds depending on the vlaue of the key: 'student', 'assignment', or 'expectation'
 
 const createClassroom = async (req, res) => {
+  /**
+   * creates a classroom
+   * @param {string} req.body.name - name of classroom
+   * @param {string} req.body.teacher - teacher of classroom
+   * @param {string} req.body.ib - if classroom is ib
+   * @param {string} req.body.school_year - school year of classroom
+   * @param {string} req.body.assignments - assignments of classroom
+   * @param {string} req.body.students - students of classroom
+   * @param {string} req.body.expectations - expectations of classroom
+   * @returns {object} - classroom object
+   * @returns {string} - error message
+   * 
+   */
   // VALIDATING THE CLASSROOM
   const { error } = createValidation(req.body);
   if (error) return res.json({ error: error.details[0].message });
@@ -24,6 +37,12 @@ const createClassroom = async (req, res) => {
 };
 
 const getClassroom = async (req, res) => {
+  /**
+   * gets a classroom
+   * @param {string} req.body.classroom_id - id of classroom
+   * @returns {object} - classroom object
+   * @returns {string} - error message
+   */
   const teacher = await Teacher.findOne({ _id: req.teacher });
   if(!teacher.classes.includes(req.body.classroom_id)) return res.status(400).json({ error: 'Classroom not found.' }); // shouldn't there be a not infront of this one
 
@@ -32,6 +51,13 @@ const getClassroom = async (req, res) => {
 };
 
 const deleteClassroom =async (req, res) => {
+  /** 
+   * deletes a classroom
+   * @param {string} req.body.classroom_id - id of classroom
+   * @returns {object} - classroom object
+   * @returns {string} - error message
+   * 
+   */
   const classroom = await Classroom.deleteOne({ _id: req.teacher });
   if (!classroom) return res.status(400).json({ error: 'Classroom not found.' });
 
@@ -39,6 +65,13 @@ const deleteClassroom =async (req, res) => {
 };
 
 const updateClassroom = async (req, res) => {
+  /**
+   * updates a classroom
+   * @param {string} req.body.classroom_id - id of classroom
+   * @param {string} req.body - object of properties to update
+   * @returns {object} - classroom object
+   * @returns {string} - error message
+   */
   const classroom = await Classroom.findOne({ _id: req.classroom_id });
   if (!classroom) return res.status(400).json({ error: 'Classroom not found.' });
 
