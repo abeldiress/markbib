@@ -1,77 +1,42 @@
 services:
   db:
-    image: postgres:14.11-alpine
+    container_name: psql
+    image: postgres
     restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    environment:
-      - PGUSER=postgres
-      - POSTGRES_PASSWORD=postgres
     ports:
-      - "5432:5432"
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - db:/var/lib/postgresql/data
     networks:
       - proxynet
 
-  test_db:
-    image: postgres:14.1-alpine
-    restart: unless-stopped
-    environment:
-      - PGUSER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - '5433:5432'
-    networks:
-      - proxynet
-
   backend:
-    build:
-      context: .
-      args:
-        INSTALL_COMMUNITY_DEPS: false
-      dockerfile: ./src/backend/Dockerfile
+    container_name: backend
+    build: ./src/backend
+    ports:
+      - 5000:5000
     develop:
       watch:
         - action: sync
           path: ./src/backend
-          target: /workspace/src/backend
-          ignore:
-            - __pycache__/
-            - alembic/
-            - data/
-        - action: sync
-          path: ./src/community
-          target: /workspace/src/community
-          ignore:
-            - __pycache__/
-            - alembic/
-            - data/
-    stdin_open: true
-    tty: true
-    ports:
-      - "8000:8000"
+          target: /app
+    restart: always
     depends_on:
       - db
-      - redis
-    volumes:
-      # Mount alembic folder to sync migrations
-      - ./src/backend/alembic:/workspace/src/backend/alembic
-      # Mount data folder to sync uploaded files
-      - ./src/backend/data:/workspace/src/backend/data
-    # network_mode: host
+    env_file:
+      - .env
     networks:
       - proxynet
 
   frontend:
     build:
-      target: ${BUILD_TARGET:-prod}
+      target: ${BUILD_TARGET:-dev}
       context: ./src/frontend
       dockerfile: Dockerfile
-    # Set environment variables directly in the docker-compose file
     environment:
       NEXT_PUBLIC_API_HOSTNAME: ${NEXT_PUBLIC_API_HOSTNAME}
       NEXT_PUBLIC_FRONTEND_HOSTNAME: ${NEXT_PUBLIC_FRONTEND_HOSTNAME}
@@ -80,7 +45,7 @@ services:
     networks:
       - proxynet
     ports:
-      - 4000:4000
+      - 3000:3000
     develop:
       watch:
         - action: sync
